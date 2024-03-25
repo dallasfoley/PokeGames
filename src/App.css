@@ -11,7 +11,7 @@
 .row {
   display: grid;
   grid-template-columns: repeat(
-    7,
+    8,
     1fr
   ); /* Create seven columns of equal width */
   gap: 10px; /* Optional: adds some space between grid items */
@@ -26,8 +26,8 @@
 }
 .attributes-header {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Match the Row layout */
-  gap: 10px; /* Same as Row for consistency */
+  grid-template-columns: repeat(8, 1fr); /* Match the Row layout */
+  gap: 28px; /* Same as Row for consistency */
   font-weight: bold; /* Optional: makes header text stand out */
   margin-bottom: 10px; /* Space before the first row */
 }
