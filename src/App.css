@@ -24,6 +24,12 @@
   margin: 10px;
   border: 1px #fff solid;
 }
+.square.correct {
+  background-color: green;
+}
+.square.incorrect {
+  background-color: red;
+}
 .attributes-header {
   display: grid;
   grid-template-columns: repeat(8, 1fr); /* Match the Row layout */
