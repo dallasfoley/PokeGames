@@ -18,9 +18,35 @@
   align-items: center;
   margin-bottom: 10px; /* Add some space between each row for better readability */
 }
+.guess-input {
+  border: 0;
+  outline: 0;
+  background: #ebfffc;
+  color: #555;
+  padding: 10px 25px;
+  height: 60px;
+  border-radius: 30px;
+  flex: 1;
+  margin-right: 16px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.guess-button {
+  border: 0;
+  outline: 0;
+  color: #2f3133;
+  background: #ebfffc;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
 .square {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 10px;
   border: 1px #fff solid;
 }
@@ -33,7 +59,12 @@
 .attributes-header {
   display: grid;
   grid-template-columns: repeat(8, 1fr); /* Match the Row layout */
-  gap: 28px; /* Same as Row for consistency */
+  gap: 60px; /* Same as Row for consistency */
   font-weight: bold; /* Optional: makes header text stand out */
+  margin-top: 15px;
   margin-bottom: 10px; /* Space before the first row */
+}
+.win {
+  font-size: 50px;
+  color: #fff;
 }

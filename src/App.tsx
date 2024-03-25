@@ -43,9 +43,7 @@ function App() {
           answer && `${data.weight / 10} kg` === answer.weight ? true : false,
         ],
       };
-      console.log(pokemonData.isCorrect);
-      console.log(pokemonData.height, pokemonData.weight);
-      console.log(answer?.height, answer?.weight);
+
       setGuesses([...guesses, pokemonData]);
       answer && data.name === answer.name && setState(true);
     } catch (error) {
@@ -83,24 +81,22 @@ function App() {
     getAnswer();
   }, []);
 
-  console.log(`answer: ${answer?.name}`);
-  console.log(`answer: ${answer?.height}`);
-  console.log(`answer: ${answer?.weight}`);
-
   return (
     <>
       <div className="App">
         <div className="wrapper">
           <input
+            className="guess-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
           ></input>
-          <button onClick={() => handleGuess()}>Guess</button>
-          {guessCount === 0 ? null : <div>Guess a pokemon to begin</div>}
+          <button className="guess-button" onClick={() => handleGuess()}>
+            Guess
+          </button>
+          {guessCount !== 0 ? null : <div>Guess a pokemon to begin</div>}
           {state && (
             <div className="win">
-              {" "}
               Congratulations! It took you {guessCount} guesses to correctly
               guess the Pokemon!
             </div>
