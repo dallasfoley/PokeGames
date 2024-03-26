@@ -9,6 +9,29 @@
   align-items: center;
   justify-content: center;
 }
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pokegames-logo {
+  font-family: "Lucky 7", Arial, sans-serif; /* Substitute 'Lucky 7' with your chosen font */
+  margin-bottom: 15px;
+  color: #ffde00; /* Bright yellow */
+  font-size: 48px; /* Adjust size as needed */
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0px #3b4cca,
+    /* Blue shadow for depth */ 6px 6px 0px rgba(0, 0, 0, 0.2); /* Optional: Dark shadow for more depth */
+  transform: skew(-10deg); /* Slight slant */
+}
+.pokegames-logo:hover {
+  transform: scale(1.05); /* Enlarge the box slightly on hover */
+  /* Change cursor to indicate clickable area */
+}
+.pokegames-logo a {
+  color: #ffde00; /* Bright yellow */
+  text-decoration: none; /* Removes the underline */
+}
 .row {
   display: grid;
   grid-template-columns: repeat(
@@ -25,12 +48,13 @@
   background: #ebfffc;
   color: #555;
   padding: 10px 25px;
-  height: 60px;
+  height: 40px;
   border-radius: 30px;
   flex: 1;
   margin-right: 16px;
   font-size: 18px;
   margin-bottom: 10px;
+  margin-top: 5px;
 }
 .guess-button {
   border: 0;
@@ -77,9 +101,74 @@
   margin-bottom: 10px; /* Space before the first row */
 }
 .win {
-  font-size: 50px;
+  font-size: 30px;
+  max-width: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   color: #fff;
+}
+.Home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.link-box {
+  font-size: 25px;
+  width: 300px; /* Width of the box */
+  height: 150px; /* Height of the box */
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  margin: 20px; /* Add some space around the boxes */
+  background-color: #4e5052; /* Light grey background */
+  color: white; /* White text color */
+  text-decoration: none; /* Remove underline from links */
+  border: 2px #fff solid;
+  border-radius: 10px; /* Rounded corners */
+  transition: transform 0.2s; /* Smooth transform on hover */
+  cursor: pointer;
+}
+.link-box a {
+  /* This targets <a> tags inside .link-box */
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Ensures the text color is the same as the parent, which is white as set in .link-box */
+  background-color: transparent; /* Ensures that the background is transparent, though this is typically the default */
+}
+.link-box:hover {
+  transform: scale(1.05); /* Enlarge the box slightly on hover */
+  /* Change cursor to indicate clickable area */
+}
+.Zoom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.zoom-image {
+  width: 500px; /* Adjust width as needed */
+  height: 500px; /* Adjust height as needed */
+  object-fit: contain;
+}
+.zoom-guess-div {
+  width: 500px;
+  height: 100px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
+}
+.zoom-answer-div {
+  width: 500px;
+  height: 100px;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
 }

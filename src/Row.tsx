@@ -30,7 +30,7 @@ const Row = ({
       <Square info={type2} isCorrect={isCorrect[2]} />
       <Square info={habitat} isCorrect={isCorrect[3]} />
       <Square info={color} isCorrect={isCorrect[4]} />
-      <Square info={evolutionStage} isCorrect={isCorrect[0]} />
+      <Square info={evolutionStage} isCorrect={isCorrect[5]} />
       <Square info={height} isCorrect={isCorrect[6]} />
       <Square info={weight} isCorrect={isCorrect[7]} />
     </div>
