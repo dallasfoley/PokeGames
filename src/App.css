@@ -42,6 +42,14 @@
   height: 60px;
   cursor: pointer;
 }
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  } 
+}*/
 .square {
   width: 80px;
   height: 80px;
@@ -51,6 +59,8 @@
   margin: 10px;
   border: 2px #fff solid;
   border-radius: 15%;
+  /* animation-name: fadeIn;
+  animation-duration: 0.5s; */
 }
 .square.correct {
   background-color: green;

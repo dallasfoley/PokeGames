@@ -15,7 +15,7 @@ function App() {
     if (state === false) {
       try {
         const rawData = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${input}`
+          `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
         );
         const data = await rawData.json();
         setGuessCount(guessCount + 1);
@@ -53,7 +53,7 @@ function App() {
             answer && data.name === answer.name ? true : false,
             answer && data.types[0].type.name === answer.type1 ? true : false,
             (answer &&
-              data.t1ypes.length > 1 &&
+              data.types.length > 1 &&
               data.types[1].type.name === answer.type2) ||
             (data.types.length === 1 && answer?.type2 === "None")
               ? true
