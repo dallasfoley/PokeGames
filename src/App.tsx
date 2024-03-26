@@ -8,6 +8,7 @@ function App() {
   const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<PokemonApi[]>([]);
   const [answer, setAnswer] = useState<PokemonApi | null>(null);
+  const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
 
   const handleGuess = async () => {
@@ -21,21 +22,38 @@ function App() {
         const speciesUrl = data.species.url;
         const speciesRawData = await fetch(speciesUrl);
         const speciesData = await speciesRawData.json();
+        const evolutionChainUrl = speciesData.evolution_chain.url;
+        const evolutionChainRawData = await fetch(evolutionChainUrl);
+        const evolutionChainData = await evolutionChainRawData.json();
+        let evolutionStage;
+        const evolvesFrom = speciesData.evolves_from_species;
+        const firstEvolution = evolutionChainData.chain;
 
+        if (!evolvesFrom && firstEvolution.evolves_to.length > 0) {
+          evolutionStage = "1";
+        } else if (
+          evolvesFrom &&
+          firstEvolution.evolves_to.length > 0 &&
+          firstEvolution.evolves_to[0].evolves_to.length > 0
+        ) {
+          evolutionStage = "2";
+        } else {
+          evolutionStage = "3";
+        }
         const pokemonData = {
           name: data.name,
           type1: data.types.length > 0 ? data.types[0].type.name : "None",
           type2: data.types.length > 1 ? data.types[1].type.name : "None",
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: "Unknown", // Placeholder, determining this would require additional logic
+          evolutionStage: evolutionStage, // Placeholder, determining this would require additional logic
           height: `${data.height * 10} cm`,
           weight: `${data.weight / 10} kg`,
           isCorrect: [
             answer && data.name === answer.name ? true : false,
             answer && data.types[0].type.name === answer.type1 ? true : false,
             (answer &&
-              data.types.length > 1 &&
+              data.t1ypes.length > 1 &&
               data.types[1].type.name === answer.type2) ||
             (data.types.length === 1 && answer?.type2 === "None")
               ? true
@@ -44,7 +62,7 @@ function App() {
               ? true
               : false,
             answer && speciesData.color.name === answer.color ? true : false,
-            false,
+            answer && evolutionStage === answer.evolutionStage ? true : false,
             answer && `${data.height * 10} cm` === answer.height ? true : false,
             answer && `${data.weight / 10} kg` === answer.weight ? true : false,
           ],
@@ -68,13 +86,32 @@ function App() {
         const speciesUrl = data.species.url;
         const speciesRawData = await fetch(speciesUrl);
         const speciesData = await speciesRawData.json();
+        setAnswerPic(data.sprites.front_default);
+        const evolutionChainUrl = speciesData.evolution_chain.url;
+        const evolutionChainRawData = await fetch(evolutionChainUrl);
+        const evolutionChainData = await evolutionChainRawData.json();
+        let evolutionStage;
+        const evolvesFrom = speciesData.evolves_from_species;
+        const firstEvolution = evolutionChainData.chain;
+
+        if (!evolvesFrom && firstEvolution.evolves_to.length > 0) {
+          evolutionStage = "1";
+        } else if (
+          evolvesFrom &&
+          firstEvolution.evolves_to.length > 0 &&
+          firstEvolution.evolves_to[0].evolves_to.length > 0
+        ) {
+          evolutionStage = "2";
+        } else {
+          evolutionStage = "3";
+        }
         const pokemonData = {
           name: data.name,
           type1: data.types.length > 0 ? data.types[0].type.name : "None",
           type2: data.types.length > 1 ? data.types[1].type.name : "None",
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: "Unknown", // Placeholder, determining this would require additional logic
+          evolutionStage: evolutionStage, // Placeholder, determining this would require additional logic
           height: `${data.height * 10} cm`,
           weight: `${data.weight / 10} kg`,
           isCorrect: [false],
@@ -102,11 +139,14 @@ function App() {
           <button className="guess-button" onClick={() => handleGuess()}>
             Guess
           </button>
-          {guessCount !== 0 ? null : <div>Guess a pokemon to begin</div>}
+          {guessCount !== 0 ? null : (
+            <div style={{ fontSize: "20px" }}>Guess a pokemon to begin</div>
+          )}
           {state && (
             <div className="win">
               Congratulations! It took you {guessCount} guesses to correctly
               guess the Pokemon!
+              <img src={answerPic}></img>
             </div>
           )}
           {guessCount > 0 && (
