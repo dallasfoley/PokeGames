@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./Home";
 import Classic from "./Classic";
 import Zoom from "./Zoom";
+import Blurry from "./Blurry";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/classic" element={<Classic />}></Route>
             <Route path="/zoom" element={<Zoom />}></Route>
+            <Route path="/blurry" element={<Blurry />}></Route>
           </Routes>
         </Router>
       </div>

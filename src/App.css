@@ -141,18 +141,19 @@
   transform: scale(1.05); /* Enlarge the box slightly on hover */
   /* Change cursor to indicate clickable area */
 }
-.Zoom {
+.Blurry {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.zoom-image {
+.blurry-image {
   width: 500px; /* Adjust width as needed */
   height: 500px; /* Adjust height as needed */
   object-fit: contain;
+  transition: transform 0.3s ease;
 }
-.zoom-guess-div {
+.blurry-guess-div {
   width: 500px;
   height: 100px;
   background-color: red;
@@ -162,7 +163,7 @@
   font-size: 20px;
   border: 2px #fff solid;
 }
-.zoom-answer-div {
+.blurry-answer-div {
   width: 500px;
   height: 100px;
   background-color: green;

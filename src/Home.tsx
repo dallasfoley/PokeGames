@@ -7,12 +7,15 @@ const Home = () => {
         <div className="pokegames-logo">
           <Link to="/">PokeGames</Link>
         </div>
-        <div className="link-box classic-link">
-          <Link to="/classic">Classic</Link>
-        </div>
-        <div className="link-box">
-          <Link to="/zoom">Zoomed-In Image</Link>
-        </div>
+        <Link className="link-box classic-link" to="/classic">
+          Classic
+        </Link>
+        <Link className="link-box" to="/blurry">
+          Blurry Image
+        </Link>
+        <Link className="link-box" to="/zoom">
+          Zoomed-In Image
+        </Link>
       </div>
     </>
   );
