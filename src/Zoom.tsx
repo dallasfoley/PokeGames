@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const Blurry = () => {
+const Zoom = () => {
   const [answer, setAnswer] = useState("");
   const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
@@ -53,7 +53,7 @@ const Blurry = () => {
 
   return (
     <>
-      <div className="Blurry">
+      <div className="Zoom">
         <div className="pokegames-logo">
           <Link to="/">PokeGames</Link>
         </div>
@@ -72,9 +72,9 @@ const Blurry = () => {
           <div>
             <img
               src={answerPic}
-              className="blurry-image"
+              className="zoom-image"
               style={{
-                filter: !state ? `blur(${25 - guessCount * 3}px)` : "none", // Example scaling calculation
+                filter: !state ? `blur(${25 - guessCount * 4}px)` : "none",
               }}
             />
           </div>
@@ -84,22 +84,15 @@ const Blurry = () => {
             Congratulations! It took you {guessCount}{" "}
             {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
-            {/* <img
-              src={answerPic}
-              className="zoom-image"
-              style={{
-                filter: "blur(25px)", // Example scaling calculation
-              }}
-            /> */}
           </div>
         )}
-        {state && <div className="blurry-answer-div">{answer}</div>}
+        {state && <div className="zoom-answer-div">{answer}</div>}
         {guesses.map((guess) => (
-          <div className="blurry-guess-div">{guess}</div>
+          <div className="zoom-guess-div">{guess}</div>
         ))}
       </div>
     </>
   );
 };
 
-export default Blurry;
+export default Zoom;

@@ -68,29 +68,18 @@ const Blurry = () => {
             Guess
           </button>
         </div>
-        {!state && (
-          <div>
-            <img
-              src={answerPic}
-              className="blurry-image"
-              style={{
-                filter: !state ? `blur(${25 - guessCount * 3}px)` : "none", // Example scaling calculation
-              }}
-            />
-          </div>
-        )}
+        <img
+          src={answerPic}
+          className="blurry-image"
+          style={{
+            filter: !state ? `blur(${25 - guessCount * 3}px)` : "none", // Example scaling calculation
+          }}
+        />
         {state && (
           <div className="win">
             Congratulations! It took you {guessCount}{" "}
             {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
-            {/* <img
-              src={answerPic}
-              className="zoom-image"
-              style={{
-                filter: "blur(25px)", // Example scaling calculation
-              }}
-            /> */}
           </div>
         )}
         {state && <div className="blurry-answer-div">{answer}</div>}
