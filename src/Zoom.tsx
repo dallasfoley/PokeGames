@@ -8,7 +8,7 @@ const Zoom = () => {
   const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [zoomPercent, setZoomPercent] = useState(500);
+  const [zoomPercent, setZoomPercent] = useState(750);
 
   const handleGuess = async () => {
     try {
