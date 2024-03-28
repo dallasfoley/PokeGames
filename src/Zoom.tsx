@@ -79,7 +79,7 @@ const Zoom = () => {
           <img
             src={answerPic}
             alt="Answer"
-            style={{ width: "200px", height: "200px", margin: "20px auto" }}
+            style={{ width: "500px", height: "500px", margin: "20px auto" }}
           />
         ) : (
           <div
