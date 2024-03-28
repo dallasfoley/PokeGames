@@ -1,42 +1,202 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  background-color: #2f3133;
+  color: #fff;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.pokegames-logo {
+  font-family: "Lucky 7", Arial, sans-serif; /* Substitute 'Lucky 7' with your chosen font */
+  margin-bottom: 15px;
+  color: #ffde00; /* Bright yellow */
+  font-size: 48px; /* Adjust size as needed */
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0px #3b4cca,
+    /* Blue shadow for depth */ 6px 6px 0px rgba(0, 0, 0, 0.2); /* Optional: Dark shadow for more depth */
+  transform: skew(-10deg); /* Slight slant */
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pokegames-logo:hover {
+  transform: scale(1.05); /* Enlarge the box slightly on hover */
+  /* Change cursor to indicate clickable area */
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.pokegames-logo a {
+  color: #ffde00; /* Bright yellow */
+  text-decoration: none; /* Removes the underline */
 }
-
-.card {
-  padding: 2em;
+.row {
+  display: grid;
+  grid-template-columns: repeat(
+    8,
+    1fr
+  ); /* Create seven columns of equal width */
+  gap: 10px; /* Optional: adds some space between grid items */
+  align-items: center;
+  margin-bottom: 10px; /* Add some space between each row for better readability */
 }
-
-.read-the-docs {
-  color: #888;
+.guess-input {
+  border: 0;
+  outline: 0;
+  background: #ebfffc;
+  color: #555;
+  padding: 10px 25px;
+  height: 40px;
+  border-radius: 30px;
+  flex: 1;
+  margin-right: 16px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.guess-button {
+  border: 0;
+  outline: 0;
+  color: #2f3133;
+  background: #ebfffc;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+.square {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  border: 2px #fff solid;
+  border-radius: 15%;
+  /* animation-name: fadeIn;
+  animation-duration: 0.5s; */
+}
+.square.correct {
+  background-color: green;
+}
+.square.incorrect {
+  background-color: red;
+}
+.attributes-header {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* Match the Row layout */
+  gap: 60px; /* Same as Row for consistency */
+  font-weight: bold; /* Optional: makes header text stand out */
+  margin-top: 15px;
+  margin-bottom: 10px; /* Space before the first row */
+}
+.win {
+  font-size: 30px;
+  max-width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+}
+.Home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.link-box {
+  font-size: 25px;
+  width: 300px; /* Width of the box */
+  height: 150px; /* Height of the box */
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  margin: 20px; /* Add some space around the boxes */
+  background-color: #4e5052; /* Light grey background */
+  color: white; /* White text color */
+  text-decoration: none; /* Remove underline from links */
+  border: 2px #fff solid;
+  border-radius: 10px; /* Rounded corners */
+  transition: transform 0.2s; /* Smooth transform on hover */
+  cursor: pointer;
+}
+.link-box a {
+  /* This targets <a> tags inside .link-box */
+  text-decoration: none; /* Removes the underline */
+  color: inherit; /* Ensures the text color is the same as the parent, which is white as set in .link-box */
+  background-color: transparent; /* Ensures that the background is transparent, though this is typically the default */
+}
+.link-box:hover {
+  transform: scale(1.05); /* Enlarge the box slightly on hover */
+  /* Change cursor to indicate clickable area */
+}
+.Blurry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.classic-img {
+  width: 300px; /* Adjust width as needed */
+  height: 300px; /* Adjust height as needed */
+  object-fit: contain;
+}
+.blurry-image {
+  width: 500px; /* Adjust width as needed */
+  height: 500px; /* Adjust height as needed */
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.blurry-guess-div {
+  width: 500px;
+  height: 100px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
+  margin: 16px;
+}
+.blurry-answer-div {
+  width: 500px;
+  height: 100px;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
+  margin: 16px;
+}
+.Zoom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.zoom-guess-div {
+  width: 500px;
+  height: 100px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
+  margin: 16px;
+}
+.zoom-answer-div {
+  width: 500px;
+  height: 100px;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 2px #fff solid;
+  margin: 16px;
 }
