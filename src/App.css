@@ -15,32 +15,27 @@
   justify-content: center;
 }
 .pokegames-logo {
-  font-family: "Lucky 7", Arial, sans-serif; /* Substitute 'Lucky 7' with your chosen font */
+  font-family: "Lucky 7", Arial, sans-serif;
   margin-bottom: 15px;
-  color: #ffde00; /* Bright yellow */
-  font-size: 48px; /* Adjust size as needed */
+  color: #ffde00;
+  font-size: 48px;
   text-transform: uppercase;
-  text-shadow: 3px 3px 0px #3b4cca,
-    /* Blue shadow for depth */ 6px 6px 0px rgba(0, 0, 0, 0.2); /* Optional: Dark shadow for more depth */
-  transform: skew(-10deg); /* Slight slant */
+  text-shadow: 3px 3px 0px #3b4cca, 6px 6px 0px rgba(0, 0, 0, 0.2);
+  transform: skew(-10deg);
 }
 .pokegames-logo:hover {
-  transform: scale(1.05); /* Enlarge the box slightly on hover */
-  /* Change cursor to indicate clickable area */
+  transform: scale(1.05);
 }
 .pokegames-logo a {
-  color: #ffde00; /* Bright yellow */
-  text-decoration: none; /* Removes the underline */
+  color: #ffde00;
+  text-decoration: none;
 }
 .row {
   display: grid;
-  grid-template-columns: repeat(
-    8,
-    1fr
-  ); /* Create seven columns of equal width */
-  gap: 10px; /* Optional: adds some space between grid items */
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
   align-items: center;
-  margin-bottom: 10px; /* Add some space between each row for better readability */
+  margin-bottom: 10px;
 }
 .guess-input {
   border: 0;
@@ -75,8 +70,6 @@
   margin: 10px;
   border: 2px #fff solid;
   border-radius: 15%;
-  /* animation-name: fadeIn;
-  animation-duration: 0.5s; */
 }
 .square.correct {
   background-color: green;
@@ -86,11 +79,11 @@
 }
 .attributes-header {
   display: grid;
-  grid-template-columns: repeat(8, 1fr); /* Match the Row layout */
-  gap: 60px; /* Same as Row for consistency */
-  font-weight: bold; /* Optional: makes header text stand out */
+  grid-template-columns: repeat(8, 1fr);
+  gap: 60px;
+  font-weight: bold;
   margin-top: 15px;
-  margin-bottom: 10px; /* Space before the first row */
+  margin-bottom: 10px;
 }
 .win {
   font-size: 30px;
@@ -109,29 +102,27 @@
 }
 .link-box {
   font-size: 25px;
-  width: 300px; /* Width of the box */
-  height: 150px; /* Height of the box */
+  width: 300px;
+  height: 150px;
   display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
-  margin: 20px; /* Add some space around the boxes */
-  background-color: #4e5052; /* Light grey background */
-  color: white; /* White text color */
-  text-decoration: none; /* Remove underline from links */
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  background-color: #4e5052;
+  color: white;
+  text-decoration: none;
   border: 2px #fff solid;
-  border-radius: 10px; /* Rounded corners */
-  transition: transform 0.2s; /* Smooth transform on hover */
+  border-radius: 10px;
+  transition: transform 0.2s;
   cursor: pointer;
 }
 .link-box a {
-  /* This targets <a> tags inside .link-box */
-  text-decoration: none; /* Removes the underline */
-  color: inherit; /* Ensures the text color is the same as the parent, which is white as set in .link-box */
-  background-color: transparent; /* Ensures that the background is transparent, though this is typically the default */
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
 }
 .link-box:hover {
-  transform: scale(1.05); /* Enlarge the box slightly on hover */
-  /* Change cursor to indicate clickable area */
+  transform: scale(1.05);
 }
 .Blurry {
   display: flex;
@@ -140,13 +131,13 @@
   flex-direction: column;
 }
 .classic-img {
-  width: 300px; /* Adjust width as needed */
-  height: 300px; /* Adjust height as needed */
+  width: 500px;
+  height: 500px;
   object-fit: contain;
 }
 .blurry-image {
-  width: 500px; /* Adjust width as needed */
-  height: 500px; /* Adjust height as needed */
+  width: 500px;
+  height: 500px;
   object-fit: contain;
   transition: transform 0.3s ease;
 }

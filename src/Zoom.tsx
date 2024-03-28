@@ -76,22 +76,20 @@ const Zoom = () => {
           </button>
         </div>
         {state ? (
-          // Display the full image without zoom when the answer is correct
           <img
             src={answerPic}
             alt="Answer"
             style={{ width: "200px", height: "200px", margin: "20px auto" }}
           />
         ) : (
-          // Use a div with background image for zoom effect when guessing
           <div
             className="image-container"
             style={{
               backgroundImage: `url(${answerPic})`,
               backgroundSize: `${zoomPercent}%`,
               backgroundPosition: "center",
-              width: "200px",
-              height: "200px",
+              width: "500px",
+              height: "500px",
               margin: "20px auto",
               border: "1px solid black", // Optional, to visualize the container
               backgroundRepeat: "no-repeat",
