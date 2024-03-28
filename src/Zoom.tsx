@@ -12,14 +12,10 @@ const Zoom = () => {
 
   const handleGuess = async () => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      // const rawData = await fetch(
-      //   `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
-      // );
       setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
-      setZoomPercent((prevZoom) => prevZoom - 20);
+      setZoomPercent((prevZoom) => prevZoom - 50);
     } catch (error) {
       console.error(error);
       alert("Failed to fetch Pokémon");
