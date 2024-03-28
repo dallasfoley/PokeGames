@@ -45,6 +45,7 @@ const Zoom = () => {
           const data = await rawData.json();
           setAnswer(data.name);
           setAnswerPic(data.sprites.front_default);
+          console.log(answer);
         } catch (error) {
           console.error(error);
           alert("Failed to fetch Answer Pokémon, reload page");
@@ -81,12 +82,10 @@ const Zoom = () => {
           className="image-container"
           style={{
             backgroundImage: `url(${answerPic})`,
-            backgroundSize: `${zoomPercent}%`,
+            backgroundSize: !state ? `${zoomPercent}%` : "100%",
             backgroundPosition: "center",
             width: "200px",
             height: "200px",
-            border: "1px solid black",
-            backgroundRepeat: "no-repeat",
             margin: "20px auto",
           }}
         ></div>
