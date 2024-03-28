@@ -93,6 +93,7 @@
   align-items: center;
   flex-direction: column;
   color: #fff;
+  margin: 20px;
 }
 .Home {
   display: flex;
