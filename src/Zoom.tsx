@@ -13,9 +13,9 @@ const Zoom = () => {
   const handleGuess = async () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const rawData = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
-      );
+      // const rawData = await fetch(
+      //   `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
+      // );
       setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
