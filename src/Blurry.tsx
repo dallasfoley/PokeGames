@@ -24,8 +24,15 @@ const Blurry = () => {
     }
   };
 
+  const capitalizeFirstLetter = (info: string | number) => {
+    if (typeof info === "string") {
+      return info.charAt(0).toUpperCase() + info.slice(1);
+    }
+    return info;
+  };
+
   useEffect(() => {
-    if (answer === "" && !loading) {
+    if (answer === "" && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
@@ -72,7 +79,7 @@ const Blurry = () => {
           src={answerPic}
           className="blurry-image"
           style={{
-            filter: !state ? `blur(${25 - guessCount * 3}px)` : "none", // Example scaling calculation
+            filter: !state ? `blur(${25 - guessCount * 5}px)` : "none", // Example scaling calculation
           }}
         />
         {state && (
@@ -82,9 +89,13 @@ const Blurry = () => {
             Pokemon!
           </div>
         )}
-        {state && <div className="blurry-answer-div">{answer}</div>}
+        {state && (
+          <div className="blurry-answer-div">
+            {capitalizeFirstLetter(answer)}
+          </div>
+        )}
         {guesses.map((guess) => (
-          <div className="blurry-guess-div">{guess}</div>
+          <div className="blurry-guess-div">{capitalizeFirstLetter(guess)}</div>
         ))}
       </div>
     </>

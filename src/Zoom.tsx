@@ -8,6 +8,7 @@ const Zoom = () => {
   const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [zoomPercent, setZoomPercent] = useState(500);
 
   const handleGuess = async () => {
     try {
@@ -18,14 +19,22 @@ const Zoom = () => {
       setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
+      setZoomPercent((prevZoom) => prevZoom - 20);
     } catch (error) {
       console.error(error);
       alert("Failed to fetch Pokémon");
     }
   };
 
+  const capitalizeFirstLetter = (info: string | number) => {
+    if (typeof info === "string") {
+      return info.charAt(0).toUpperCase() + info.slice(1);
+    }
+    return info;
+  };
+
   useEffect(() => {
-    if (answer === "" && !loading) {
+    if (answer === "" && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
@@ -64,21 +73,23 @@ const Zoom = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
           ></input>
-          <button className="guess-button" onClick={() => handleGuess()}>
+          <button className="guess-button" onClick={handleGuess}>
             Guess
           </button>
         </div>
-        {!state && (
-          <div>
-            <img
-              src={answerPic}
-              className="zoom-image"
-              style={{
-                filter: !state ? `blur(${25 - guessCount * 4}px)` : "none",
-              }}
-            />
-          </div>
-        )}
+        <div
+          className="image-container"
+          style={{
+            backgroundImage: `url(${answerPic})`,
+            backgroundSize: `${zoomPercent}%`,
+            backgroundPosition: "center",
+            width: "200px",
+            height: "200px",
+            border: "1px solid black",
+            backgroundRepeat: "no-repeat",
+            margin: "20px auto",
+          }}
+        ></div>
         {state && (
           <div className="win">
             Congratulations! It took you {guessCount}{" "}
@@ -86,9 +97,11 @@ const Zoom = () => {
             Pokemon!
           </div>
         )}
-        {state && <div className="zoom-answer-div">{answer}</div>}
+        {state && (
+          <div className="zoom-answer-div">{capitalizeFirstLetter(answer)}</div>
+        )}
         {guesses.map((guess) => (
-          <div className="zoom-guess-div">{guess}</div>
+          <div className="zoom-guess-div">{capitalizeFirstLetter(guess)}</div>
         ))}
       </div>
     </>

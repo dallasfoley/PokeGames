@@ -11,7 +11,15 @@ const Square = ({
   } else if (isCorrect === false) {
     className += " incorrect"; // Add 'incorrect' class if the guess is wrong
   }
-  return <div className={className}>{info}</div>;
+
+  const capitalizeFirstLetter = (info: string | number) => {
+    if (typeof info === "string") {
+      return info.charAt(0).toUpperCase() + info.slice(1);
+    }
+    return info;
+  };
+
+  return <div className={className}>{capitalizeFirstLetter(info)}</div>;
 };
 
 export default Square;

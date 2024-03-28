@@ -153,7 +153,7 @@ const Classic = () => {
               Congratulations! It took you {guessCount}{" "}
               {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
               Pokemon!
-              <img src={answerPic}></img>
+              <img className="classic-img" src={answerPic}></img>
             </div>
           )}
           {guessCount > 0 && (
