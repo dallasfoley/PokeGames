@@ -79,7 +79,7 @@ const Blurry = () => {
           src={answerPic}
           className="blurry-image"
           style={{
-            filter: !state ? `blur(${25 - guessCount * 5}px)` : "none", // Example scaling calculation
+            filter: !state ? `blur(${64 - guessCount * 8}px)` : "none", // Example scaling calculation
           }}
         />
         {state && (
