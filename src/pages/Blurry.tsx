@@ -64,6 +64,7 @@ const Blurry = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
+            onKeyDown={(e) => e.key === "Enter" && handleGuess()}
           ></input>
           <button className="guess-button" onClick={() => handleGuess()}>
             Guess
@@ -73,7 +74,11 @@ const Blurry = () => {
           src={answerPic}
           className="blurry-image"
           style={{
-            filter: !state ? `blur(${64 - guessCount * 8}px)` : "none", // Example scaling calculation
+            filter: !state ? `blur(${64 - guessCount * 8}px)` : "none",
+            width: "500px",
+            height: "500px",
+            objectFit: "contain",
+            transition: "transform 0.3s ease",
           }}
         />
         {state && (
@@ -81,11 +86,9 @@ const Blurry = () => {
             Congratulations! It took you {guessCount}{" "}
             {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
-          </div>
-        )}
-        {state && (
-          <div className="blurry-answer-div">
-            {capitalizeFirstLetter(answer)}
+            <div className="blurry-answer-div">
+              {capitalizeFirstLetter(answer)}
+            </div>
           </div>
         )}
         {guesses.map((guess) => (

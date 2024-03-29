@@ -16,8 +16,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/classic" element={<Classic />}></Route>
-            <Route path="/zoom" element={<Zoom />}></Route>
             <Route path="/blurry" element={<Blurry />}></Route>
+            <Route path="/zoom" element={<Zoom />}></Route>
           </Routes>
         </Router>
       </div>

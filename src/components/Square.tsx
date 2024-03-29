@@ -5,12 +5,8 @@ const Square = ({
   info: string | number;
   isCorrect: boolean;
 }) => {
-  let className = "square"; // Default class
-  if (isCorrect === true) {
-    className += " correct"; // Add 'correct' class if the guess is correct
-  } else if (isCorrect === false) {
-    className += " incorrect"; // Add 'incorrect' class if the guess is wrong
-  }
+  const className =
+    isCorrect === true ? "square squarecorrect" : "square squareincorrect"; // Default class
 
   const capitalizeFirstLetter = (info: string | number) => {
     if (typeof info === "string") {

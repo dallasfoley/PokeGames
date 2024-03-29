@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
 import Row from "../components/Row";
 import { PokemonApi } from "../components/Row";
 
@@ -131,23 +130,18 @@ const Classic = () => {
     <>
       <div className="Classic">
         <div className="wrapper">
-          <div className="pokegames-logo">
-            <Link to="/">PokeGames</Link>
-          </div>
           <div className="input-group">
             <input
               className="guess-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type Pokemon name..."
+              onKeyDown={(e) => e.key === "Enter" && handleGuess()}
             ></input>
             <button className="guess-button" onClick={() => handleGuess()}>
               Guess
             </button>
           </div>
-          {guessCount !== 0 ? null : (
-            <div style={{ fontSize: "20px" }}>Guess a Pokemon to begin</div>
-          )}
           {state && (
             <div className="win">
               Congratulations! It took you {guessCount}{" "}
@@ -156,7 +150,7 @@ const Classic = () => {
               <img className="classic-img" src={answerPic}></img>
             </div>
           )}
-          {guessCount > 0 && (
+          {guessCount > 0 ? (
             <div className="attributes-header">
               <div>Name</div>
               <div>Type 1</div>
@@ -167,6 +161,8 @@ const Classic = () => {
               <div>Height</div>
               <div>Weight</div>
             </div>
+          ) : (
+            <div style={{ fontSize: "20px" }}>Guess a Pokemon to begin</div>
           )}
           {guesses.map((guess) => (
             <Row {...guess} key={guess.name} />

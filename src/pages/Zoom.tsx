@@ -67,8 +67,9 @@ const Zoom = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
+            onKeyDown={(e) => e.key === "Enter" && handleGuess()}
           ></input>
-          <button className="guess-button" onClick={handleGuess}>
+          <button className="guess-button" onClick={() => handleGuess()}>
             Guess
           </button>
         </div>
@@ -99,10 +100,10 @@ const Zoom = () => {
             Congratulations! It took you {guessCount}{" "}
             {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
+            <div className="zoom-answer-div">
+              {capitalizeFirstLetter(answer)}
+            </div>
           </div>
-        )}
-        {state && (
-          <div className="zoom-answer-div">{capitalizeFirstLetter(answer)}</div>
         )}
         {guesses.map((guess) => (
           <div className="zoom-guess-div">{capitalizeFirstLetter(guess)}</div>
