@@ -111,7 +111,7 @@ const Classic = () => {
           type2: data.types.length > 1 ? data.types[1].type.name : "None",
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: evolutionStage, // Placeholder, determining this would require additional logic
+          evolutionStage: evolutionStage,
           height: `${data.height * 10} cm`,
           weight: `${data.weight / 10} kg`,
           isCorrect: [false],

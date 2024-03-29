@@ -23,16 +23,22 @@ const Row = ({
   weight,
   isCorrect,
 }: PokemonApi) => {
+  const attributes = [
+    name,
+    type1,
+    type2,
+    habitat,
+    color,
+    evolutionStage,
+    height,
+    weight,
+  ];
+
   return (
     <div className="row">
-      <Square info={name} isCorrect={isCorrect[0]} />
-      <Square info={type1} isCorrect={isCorrect[1]} />
-      <Square info={type2} isCorrect={isCorrect[2]} />
-      <Square info={habitat} isCorrect={isCorrect[3]} />
-      <Square info={color} isCorrect={isCorrect[4]} />
-      <Square info={evolutionStage} isCorrect={isCorrect[5]} />
-      <Square info={height} isCorrect={isCorrect[6]} />
-      <Square info={weight} isCorrect={isCorrect[7]} />
+      {attributes.map((attribute, index) => (
+        <Square key={index} info={attribute} isCorrect={isCorrect[index]} />
+      ))}
     </div>
   );
 };

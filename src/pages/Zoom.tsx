@@ -89,7 +89,7 @@ const Zoom = () => {
               width: "500px",
               height: "500px",
               margin: "20px auto",
-              border: "1px solid black", // Optional, to visualize the container
+              border: "1px solid black",
               backgroundRepeat: "no-repeat",
             }}
           ></div>
