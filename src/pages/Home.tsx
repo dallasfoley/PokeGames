@@ -4,9 +4,6 @@ const Home = () => {
   return (
     <>
       <div className="Home">
-        <div className="pokegames-logo">
-          <Link to="/">PokeGames</Link>
-        </div>
         <Link className="link-box classic-link" to="/classic">
           Classic
         </Link>

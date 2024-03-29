@@ -1,7 +1,7 @@
 * {
   background-color: #2f3133;
   color: #fff;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 .wrapper {
   display: flex;
@@ -22,6 +22,7 @@
   text-transform: uppercase;
   text-shadow: 3px 3px 0px #3b4cca, 6px 6px 0px rgba(0, 0, 0, 0.2);
   transform: skew(-10deg);
+  text-align: center;
 }
 .pokegames-logo:hover {
   transform: scale(1.05);

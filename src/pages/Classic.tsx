@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "../App.css";
 import { Link } from "react-router-dom";
-import Row from "./Row";
-import { PokemonApi } from "./Row";
+import Row from "../components/Row";
+import { PokemonApi } from "../components/Row";
 
 const Classic = () => {
   const [input, setInput] = useState("");

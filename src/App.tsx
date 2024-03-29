@@ -1,14 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./Home";
-import Classic from "./Classic";
-import Zoom from "./Zoom";
-import Blurry from "./Blurry";
+import Home from "./pages/Home";
+import Classic from "./pages/Classic";
+import Zoom from "./pages/Zoom";
+import Blurry from "./pages/Blurry";
 
 function App() {
   return (
     <>
       <div className="App">
+        <div className="pokegames-logo">
+          <a href="/">PokeGames</a>
+        </div>
         <Router>
           <Routes>
             <Route path="/" element={<Home />}></Route>

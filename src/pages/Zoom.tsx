@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-const Blurry = () => {
+
+const Zoom = () => {
   const [answer, setAnswer] = useState("");
   const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
@@ -8,12 +8,14 @@ const Blurry = () => {
   const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [zoomPercent, setZoomPercent] = useState(750);
 
   const handleGuess = async () => {
     try {
       setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
+      setZoomPercent((prevZoom) => prevZoom - 50);
     } catch (error) {
       console.error(error);
       alert("Failed to fetch Pokémon");
@@ -39,6 +41,7 @@ const Blurry = () => {
           const data = await rawData.json();
           setAnswer(data.name);
           setAnswerPic(data.sprites.front_default);
+          console.log(answer);
         } catch (error) {
           console.error(error);
           alert("Failed to fetch Answer Pokémon, reload page");
@@ -57,10 +60,7 @@ const Blurry = () => {
 
   return (
     <>
-      <div className="Blurry">
-        <div className="pokegames-logo">
-          <Link to="/">PokeGames</Link>
-        </div>
+      <div className="Zoom">
         <div className="input-group">
           <input
             className="guess-input"
@@ -68,17 +68,32 @@ const Blurry = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
           ></input>
-          <button className="guess-button" onClick={() => handleGuess()}>
+          <button className="guess-button" onClick={handleGuess}>
             Guess
           </button>
         </div>
-        <img
-          src={answerPic}
-          className="blurry-image"
-          style={{
-            filter: !state ? `blur(${64 - guessCount * 8}px)` : "none", // Example scaling calculation
-          }}
-        />
+        {state ? (
+          <img
+            src={answerPic}
+            alt="Answer"
+            style={{ width: "500px", height: "500px", margin: "20px auto" }}
+          />
+        ) : (
+          <div
+            className="image-container"
+            style={{
+              backgroundImage: `url(${answerPic})`,
+              backgroundSize: `${zoomPercent}%`,
+              backgroundPosition: "center",
+              width: "500px",
+              height: "500px",
+              margin: "20px auto",
+              border: "1px solid black", // Optional, to visualize the container
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
+        )}
+
         {state && (
           <div className="win">
             Congratulations! It took you {guessCount}{" "}
@@ -87,16 +102,14 @@ const Blurry = () => {
           </div>
         )}
         {state && (
-          <div className="blurry-answer-div">
-            {capitalizeFirstLetter(answer)}
-          </div>
+          <div className="zoom-answer-div">{capitalizeFirstLetter(answer)}</div>
         )}
         {guesses.map((guess) => (
-          <div className="blurry-guess-div">{capitalizeFirstLetter(guess)}</div>
+          <div className="zoom-guess-div">{capitalizeFirstLetter(guess)}</div>
         ))}
       </div>
     </>
   );
 };
 
-export default Blurry;
+export default Zoom;
