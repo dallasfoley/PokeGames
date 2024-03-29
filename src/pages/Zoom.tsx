@@ -5,17 +5,15 @@ const Zoom = () => {
   const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
-  const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [zoomPercent, setZoomPercent] = useState(750);
 
   const handleGuess = async () => {
     try {
-      setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
-      setZoomPercent((prevZoom) => prevZoom - 50);
+      setZoomPercent(zoomPercent - 50);
     } catch (error) {
       console.error(error);
       alert("Failed to fetch Pokémon");
@@ -97,8 +95,8 @@ const Zoom = () => {
 
         {state && (
           <div className="win">
-            Congratulations! It took you {guessCount}{" "}
-            {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
+            Congratulations! It took you {guesses.length}{" "}
+            {guesses.length === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
             <div className="zoom-answer-div">
               {capitalizeFirstLetter(answer)}

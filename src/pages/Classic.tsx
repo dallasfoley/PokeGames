@@ -5,7 +5,6 @@ import { PokemonApi } from "../components/Row";
 
 const Classic = () => {
   const [input, setInput] = useState("");
-  const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<PokemonApi[]>([]);
   const [answer, setAnswer] = useState<PokemonApi | null>(null);
   const [answerPic, setAnswerPic] = useState("");
@@ -18,7 +17,6 @@ const Classic = () => {
           `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
         );
         const data = await rawData.json();
-        setGuessCount(guessCount + 1);
         const speciesUrl = data.species.url;
         const speciesRawData = await fetch(speciesUrl);
         const speciesData = await speciesRawData.json();
@@ -46,7 +44,7 @@ const Classic = () => {
           type2: data.types.length > 1 ? data.types[1].type.name : "None",
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: evolutionStage, // Placeholder, determining this would require additional logic
+          evolutionStage: evolutionStage,
           height: `${data.height * 10} cm`,
           weight: `${data.weight / 10} kg`,
           isCorrect: [
@@ -144,13 +142,13 @@ const Classic = () => {
           </div>
           {state && (
             <div className="win">
-              Congratulations! It took you {guessCount}{" "}
-              {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
-              Pokemon!
+              Congratulations! It took you {guesses.length}{" "}
+              {guesses.length === 1 ? "guess" : "guesses"} to correctly guess
+              the Pokemon!
               <img className="classic-img" src={answerPic}></img>
             </div>
           )}
-          {guessCount > 0 ? (
+          {guesses.length > 0 ? (
             <div className="attributes-header">
               <div>Name</div>
               <div>Type 1</div>

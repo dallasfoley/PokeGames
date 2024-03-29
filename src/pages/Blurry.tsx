@@ -5,13 +5,11 @@ const Blurry = () => {
   const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
-  const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleGuess = async () => {
     try {
-      setGuessCount(guessCount + 1);
       const guess = input.toLowerCase();
       guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
     } catch (error) {
@@ -74,7 +72,7 @@ const Blurry = () => {
           src={answerPic}
           className="blurry-image"
           style={{
-            filter: !state ? `blur(${64 - guessCount * 8}px)` : "none",
+            filter: !state ? `blur(${64 - guesses.length * 8}px)` : "none",
             width: "500px",
             height: "500px",
             objectFit: "contain",
@@ -83,8 +81,8 @@ const Blurry = () => {
         />
         {state && (
           <div className="win">
-            Congratulations! It took you {guessCount}{" "}
-            {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
+            Congratulations! It took you {guesses.length}{" "}
+            {guesses.length === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
             <div className="blurry-answer-div">
               {capitalizeFirstLetter(answer)}
