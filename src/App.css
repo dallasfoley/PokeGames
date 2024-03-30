@@ -188,3 +188,49 @@
   border: 2px #fff solid;
   margin-top: 16px;
 }
+@media (max-width: 480px) {
+  .row,
+  .attributes-header {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .square {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pokegames-logo {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .guess-input,
+  .guess-button {
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .classic-img,
+  .blurry-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .link-box {
+    font-size: 20px;
+    width: 250px;
+    height: 120px;
+  }
+}
+@media (min-width: 481px) and (max-width: 768px) {
+  .row,
+  .attributes-header {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .square {
+    width: 70px;
+    height: 70px;
+  }
+}

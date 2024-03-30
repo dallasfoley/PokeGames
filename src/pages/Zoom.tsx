@@ -11,8 +11,9 @@ const Zoom = () => {
 
   const handleGuess = async () => {
     try {
-      const guess = input.toLowerCase();
-      guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
+      input.toLowerCase() === answer.toLowerCase()
+        ? setState(true)
+        : setGuesses([input.toLowerCase(), ...guesses]);
       setZoomPercent(zoomPercent - 50);
     } catch (error) {
       console.error(error);
