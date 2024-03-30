@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "../App.css";
 import Row from "../components/Row";
 import { PokemonApi } from "../components/Row";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 const Classic = () => {
   const [input, setInput] = useState("");
@@ -9,6 +11,7 @@ const Classic = () => {
   const [answer, setAnswer] = useState<PokemonApi | null>(null);
   const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
+  const darkTheme = useContext(ThemeContext);
 
   const handleGuess = async () => {
     if (state === false) {
@@ -126,7 +129,10 @@ const Classic = () => {
 
   return (
     <>
-      <div className="Classic">
+      <div
+        className="Classic"
+        style={{ backgroundColor: darkTheme ? "#ffffff" : "#2f3133" }}
+      >
         <div className="wrapper">
           <div className="input-group">
             <input
@@ -160,7 +166,14 @@ const Classic = () => {
               <div>Weight</div>
             </div>
           ) : (
-            <div style={{ fontSize: "20px" }}>Guess a Pokemon to begin</div>
+            <div
+              style={{
+                fontSize: "20px",
+                color: darkTheme ? "#2f3133" : "#ffffff",
+              }}
+            >
+              Guess a Pokemon to begin
+            </div>
           )}
           {guesses.map((guess) => (
             <Row {...guess} key={guess.name} />

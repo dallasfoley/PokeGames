@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../App";
 
 const Zoom = () => {
   const [answer, setAnswer] = useState("");
@@ -8,12 +9,16 @@ const Zoom = () => {
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [zoomPercent, setZoomPercent] = useState(750);
+  const darkTheme = useContext(ThemeContext);
 
   const handleGuess = async () => {
     try {
-      input.toLowerCase() === answer.toLowerCase()
-        ? setState(true)
-        : setGuesses([input.toLowerCase(), ...guesses]);
+      if (input.toLowerCase() === answer.toLowerCase()) {
+        setGuesses([input.toLowerCase(), ...guesses]);
+        setState(true);
+      } else {
+        setGuesses([input.toLowerCase(), ...guesses]);
+      }
       setZoomPercent(zoomPercent - 50);
     } catch (error) {
       console.error(error);
@@ -40,7 +45,7 @@ const Zoom = () => {
           const data = await rawData.json();
           setAnswer(data.name);
           setAnswerPic(data.sprites.front_default);
-          console.log(answer);
+          console.log(data.name);
         } catch (error) {
           console.error(error);
           alert("Failed to fetch Answer Pokémon, reload page");
@@ -95,17 +100,26 @@ const Zoom = () => {
         )}
 
         {state && (
-          <div className="win">
+          <div
+            className="win"
+            style={{ color: darkTheme ? "#ebfffc" : "#2f3133" }}
+          >
             Congratulations! It took you {guesses.length}{" "}
             {guesses.length === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
-            <div className="zoom-answer-div">
-              {capitalizeFirstLetter(answer)}
-            </div>
           </div>
         )}
-        {guesses.map((guess) => (
-          <div className="zoom-guess-div">{capitalizeFirstLetter(guess)}</div>
+        {guesses.map((guess, index) => (
+          <div
+            className="zoom-div zoom-guess"
+            style={{
+              backgroundColor: state && index === 0 ? "green" : "red",
+              border: darkTheme ? "2px #fff solid" : "2px #2f3133 solid",
+              color: darkTheme ? "#ebfffc" : "#2f3133",
+            }}
+          >
+            {capitalizeFirstLetter(guess)}
+          </div>
         ))}
       </div>
     </>
