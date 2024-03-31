@@ -131,7 +131,7 @@ const Classic = () => {
     <>
       <div
         className="Classic"
-        style={{ backgroundColor: darkTheme ? "#ffffff" : "#2f3133" }}
+        style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
       >
         <div className="wrapper">
           <div className="input-group">
@@ -169,7 +169,7 @@ const Classic = () => {
             <div
               style={{
                 fontSize: "20px",
-                color: darkTheme ? "#2f3133" : "#ffffff",
+                color: darkTheme ? "#ffffff" : "#2f3133",
               }}
             >
               Guess a Pokemon to begin

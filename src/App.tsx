@@ -19,7 +19,6 @@ function App() {
           className="App"
           style={{
             backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0",
-            border: darkTheme ? "2px solid #ffffff" : "2px solid #2f3133",
             color: darkTheme ? "#fff" : "#2f3133",
           }}
         >
