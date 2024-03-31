@@ -66,7 +66,10 @@ const Zoom = () => {
 
   return (
     <>
-      <div className="Zoom">
+      <div
+        className="Zoom"
+        style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
+      >
         <div className="input-group">
           <input
             className="guess-input"
