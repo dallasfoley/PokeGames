@@ -1,24 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "../App";
 
 const Zoom = () => {
   const [answer, setAnswer] = useState("");
   const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
-  const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [zoomPercent, setZoomPercent] = useState(750);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
-    try {
-      setGuessCount(guessCount + 1);
-      const guess = input.toLowerCase();
-      guess === answer ? setState(true) : setGuesses([guess, ...guesses]);
-      setZoomPercent((prevZoom) => prevZoom - 50);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to fetch Pokémon");
+    if (!state) {
+      try {
+        if (input.toLowerCase() === answer.toLowerCase()) {
+          setGuesses([input.toLowerCase(), ...guesses]);
+          setState(true);
+        } else {
+          setGuesses([input.toLowerCase(), ...guesses]);
+        }
+        setZoomPercent(zoomPercent - 50);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to fetch Pokémon");
+      }
     }
   };
 
@@ -41,7 +47,7 @@ const Zoom = () => {
           const data = await rawData.json();
           setAnswer(data.name);
           setAnswerPic(data.sprites.front_default);
-          console.log(answer);
+          console.log(data.name);
         } catch (error) {
           console.error(error);
           alert("Failed to fetch Answer Pokémon, reload page");
@@ -60,7 +66,10 @@ const Zoom = () => {
 
   return (
     <>
-      <div className="Zoom">
+      <div
+        className="Zoom"
+        style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
+      >
         <div className="input-group">
           <input
             className="guess-input"
@@ -68,8 +77,19 @@ const Zoom = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
             onKeyDown={(e) => e.key === "Enter" && handleGuess()}
+            style={{
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+              color: darkTheme ? "#2f3133" : "#f0f0f0",
+            }}
           ></input>
-          <button className="guess-button" onClick={() => handleGuess()}>
+          <button
+            className="guess-button"
+            onClick={() => handleGuess()}
+            style={{
+              color: darkTheme ? "#2f3133" : "#ebfffc",
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+            }}
+          >
             Guess
           </button>
         </div>
@@ -96,17 +116,26 @@ const Zoom = () => {
         )}
 
         {state && (
-          <div className="win">
-            Congratulations! It took you {guessCount}{" "}
-            {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
+          <div
+            className="win"
+            style={{ color: darkTheme ? "#ebfffc" : "#2f3133" }}
+          >
+            Congratulations! It took you {guesses.length}{" "}
+            {guesses.length === 1 ? "guess" : "guesses"} to correctly guess the
             Pokemon!
-            <div className="zoom-answer-div">
-              {capitalizeFirstLetter(answer)}
-            </div>
           </div>
         )}
-        {guesses.map((guess) => (
-          <div className="zoom-guess-div">{capitalizeFirstLetter(guess)}</div>
+        {guesses.map((guess, index) => (
+          <div
+            className="zoom-div zoom-guess"
+            style={{
+              backgroundColor: state && index === 0 ? "green" : "red",
+              border: darkTheme ? "2px #fff solid" : "2px #2f3133 solid",
+              color: darkTheme ? "#ebfffc" : "#2f3133",
+            }}
+          >
+            {capitalizeFirstLetter(guess)}
+          </div>
         ))}
       </div>
     </>

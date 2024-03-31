@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import "../App.css";
 import Row from "../components/Row";
 import { PokemonApi } from "../components/Row";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 const Classic = () => {
   const [input, setInput] = useState("");
-  const [guessCount, setGuessCount] = useState(0);
   const [guesses, setGuesses] = useState<PokemonApi[]>([]);
   const [answer, setAnswer] = useState<PokemonApi | null>(null);
   const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
     if (state === false) {
@@ -18,7 +20,6 @@ const Classic = () => {
           `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
         );
         const data = await rawData.json();
-        setGuessCount(guessCount + 1);
         const speciesUrl = data.species.url;
         const speciesRawData = await fetch(speciesUrl);
         const speciesData = await speciesRawData.json();
@@ -46,7 +47,7 @@ const Classic = () => {
           type2: data.types.length > 1 ? data.types[1].type.name : "None",
           habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
           color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: evolutionStage, // Placeholder, determining this would require additional logic
+          evolutionStage: evolutionStage,
           height: `${data.height * 10} cm`,
           weight: `${data.weight / 10} kg`,
           isCorrect: [
@@ -128,7 +129,10 @@ const Classic = () => {
 
   return (
     <>
-      <div className="Classic">
+      <div
+        className="Classic"
+        style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
+      >
         <div className="wrapper">
           <div className="input-group">
             <input
@@ -137,20 +141,31 @@ const Classic = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type Pokemon name..."
               onKeyDown={(e) => e.key === "Enter" && handleGuess()}
+              style={{
+                background: darkTheme ? "#ebfffc" : "#2f3133",
+                color: darkTheme ? "#2f3133" : "#f0f0f0",
+              }}
             ></input>
-            <button className="guess-button" onClick={() => handleGuess()}>
+            <button
+              className="guess-button"
+              onClick={() => handleGuess()}
+              style={{
+                color: darkTheme ? "#2f3133" : "#ebfffc",
+                background: darkTheme ? "#ebfffc" : "#2f3133",
+              }}
+            >
               Guess
             </button>
           </div>
           {state && (
             <div className="win">
-              Congratulations! It took you {guessCount}{" "}
-              {guessCount === 1 ? "guess" : "guesses"} to correctly guess the
-              Pokemon!
+              Congratulations! It took you {guesses.length}{" "}
+              {guesses.length === 1 ? "guess" : "guesses"} to correctly guess
+              the Pokemon!
               <img className="classic-img" src={answerPic}></img>
             </div>
           )}
-          {guessCount > 0 ? (
+          {guesses.length > 0 ? (
             <div className="attributes-header">
               <div>Name</div>
               <div>Type 1</div>
@@ -162,7 +177,14 @@ const Classic = () => {
               <div>Weight</div>
             </div>
           ) : (
-            <div style={{ fontSize: "20px" }}>Guess a Pokemon to begin</div>
+            <div
+              style={{
+                fontSize: "20px",
+                color: darkTheme ? "#ffffff" : "#2f3133",
+              }}
+            >
+              Guess a Pokemon to begin
+            </div>
           )}
           {guesses.map((guess) => (
             <Row {...guess} key={guess.name} />
