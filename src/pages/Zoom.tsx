@@ -9,20 +9,22 @@ const Zoom = () => {
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [zoomPercent, setZoomPercent] = useState(750);
-  const darkTheme = useContext(ThemeContext);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
-    try {
-      if (input.toLowerCase() === answer.toLowerCase()) {
-        setGuesses([input.toLowerCase(), ...guesses]);
-        setState(true);
-      } else {
-        setGuesses([input.toLowerCase(), ...guesses]);
+    if (!state) {
+      try {
+        if (input.toLowerCase() === answer.toLowerCase()) {
+          setGuesses([input.toLowerCase(), ...guesses]);
+          setState(true);
+        } else {
+          setGuesses([input.toLowerCase(), ...guesses]);
+        }
+        setZoomPercent(zoomPercent - 50);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to fetch Pokémon");
       }
-      setZoomPercent(zoomPercent - 50);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to fetch Pokémon");
     }
   };
 
@@ -72,8 +74,19 @@ const Zoom = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
             onKeyDown={(e) => e.key === "Enter" && handleGuess()}
+            style={{
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+              color: darkTheme ? "#2f3133" : "#f0f0f0",
+            }}
           ></input>
-          <button className="guess-button" onClick={() => handleGuess()}>
+          <button
+            className="guess-button"
+            onClick={() => handleGuess()}
+            style={{
+              color: darkTheme ? "#2f3133" : "#ebfffc",
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+            }}
+          >
             Guess
           </button>
         </div>

@@ -5,16 +5,23 @@ import Home from "./pages/Home";
 import Classic from "./pages/Classic";
 import Zoom from "./pages/Zoom";
 import Blurry from "./pages/Blurry";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import ThemeButton from "./components/ThemeButton";
 
-export const ThemeContext = createContext(true);
+interface ThemeContextType {
+  darkTheme: boolean;
+  setDarkTheme: (value: boolean | ((val: boolean) => boolean)) => void;
+}
+
+export const ThemeContext = createContext<ThemeContextType>({
+  darkTheme: true,
+  setDarkTheme: () => {},
+});
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true);
   return (
     <>
-      <ThemeContext.Provider value={darkTheme}>
+      <ThemeContext.Provider value={{ darkTheme, setDarkTheme }}>
         <div
           className="App"
           style={{
@@ -25,24 +32,7 @@ function App() {
           <div className="pokegames-logo">
             <a href="/">PokeGames</a>
           </div>
-          <div className="theme-toggle">
-            <button
-              onClick={() => setDarkTheme(!darkTheme)}
-              aria-label="Toggle Theme"
-              title="Toggle Theme"
-              style={{
-                backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0",
-                border: darkTheme ? "2px solid #ffffff" : "2px solid #2f3133",
-                color: darkTheme ? "#fff" : "#2f3133",
-              }}
-            >
-              {darkTheme ? (
-                <FontAwesomeIcon icon={faMoon} />
-              ) : (
-                <FontAwesomeIcon icon={faSun} />
-              )}
-            </button>
-          </div>
+          <ThemeButton />
           <Router>
             <Routes>
               <Route path="/" element={<Home />}></Route>

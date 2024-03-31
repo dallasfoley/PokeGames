@@ -9,19 +9,21 @@ const Blurry = () => {
   const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const darkTheme = useContext(ThemeContext);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
-    try {
-      if (input.toLowerCase() === answer.toLowerCase()) {
-        setGuesses([input.toLowerCase(), ...guesses]);
-        setState(true);
-      } else {
-        setGuesses([input.toLowerCase(), ...guesses]);
+    if (!state) {
+      try {
+        if (input.toLowerCase() === answer.toLowerCase()) {
+          setGuesses([input.toLowerCase(), ...guesses]);
+          setState(true);
+        } else {
+          setGuesses([input.toLowerCase(), ...guesses]);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Failed to fetch Pokémon");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Failed to fetch Pokémon");
     }
   };
 
@@ -71,8 +73,19 @@ const Blurry = () => {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type Pokemon name..."
             onKeyDown={(e) => e.key === "Enter" && handleGuess()}
+            style={{
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+              color: darkTheme ? "#2f3133" : "#f0f0f0",
+            }}
           ></input>
-          <button className="guess-button" onClick={() => handleGuess()}>
+          <button
+            className="guess-button"
+            onClick={() => handleGuess()}
+            style={{
+              color: darkTheme ? "#2f3133" : "#ebfffc",
+              background: darkTheme ? "#ebfffc" : "#2f3133",
+            }}
+          >
             Guess
           </button>
         </div>

@@ -14,7 +14,7 @@ body {
 .theme-toggle {
   position: absolute;
   top: 20px;
-  right: 20px;
+  right: 35px;
   z-index: 1000;
 }
 .theme-toggle button {
@@ -74,8 +74,8 @@ body {
 .guess-input {
   border: 0;
   outline: 0;
-  background: #ebfffc;
-  color: #555;
+  /* background: #ebfffc;
+  color: #555; */
   padding: 10px 25px;
   height: 40px;
   border-radius: 30px;
@@ -88,8 +88,8 @@ body {
 .guess-button {
   border: 0;
   outline: 0;
-  color: #2f3133;
-  background: #ebfffc;
+  /* color: #2f3133;
+  background: #ebfffc; */
   border-radius: 50%;
   width: 60px;
   height: 60px;

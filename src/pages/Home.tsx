@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../App";
 
 const Home = () => {
-  const darkTheme = useContext(ThemeContext);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   return (
     <>

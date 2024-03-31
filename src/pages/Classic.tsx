@@ -11,7 +11,7 @@ const Classic = () => {
   const [answer, setAnswer] = useState<PokemonApi | null>(null);
   const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
-  const darkTheme = useContext(ThemeContext);
+  const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
     if (state === false) {
@@ -141,8 +141,19 @@ const Classic = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type Pokemon name..."
               onKeyDown={(e) => e.key === "Enter" && handleGuess()}
+              style={{
+                background: darkTheme ? "#ebfffc" : "#2f3133",
+                color: darkTheme ? "#2f3133" : "#f0f0f0",
+              }}
             ></input>
-            <button className="guess-button" onClick={() => handleGuess()}>
+            <button
+              className="guess-button"
+              onClick={() => handleGuess()}
+              style={{
+                color: darkTheme ? "#2f3133" : "#ebfffc",
+                background: darkTheme ? "#ebfffc" : "#2f3133",
+              }}
+            >
               Guess
             </button>
           </div>
