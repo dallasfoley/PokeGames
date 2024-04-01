@@ -10,6 +10,7 @@ export type PokemonApi = {
   height: string;
   weight: string;
   isCorrect: boolean[];
+  picUrl: string;
 };
 
 const Row = ({
