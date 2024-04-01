@@ -31,7 +31,7 @@ const Zoom = () => {
   };
 
   useEffect(() => {
-    if (answer[0] === "" && !loading && !state) {
+    if (!answer[0] && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
