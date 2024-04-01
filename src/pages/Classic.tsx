@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../App.css";
 import Row from "../components/Row";
 import { PokemonApi } from "../components/Row";
@@ -12,7 +12,7 @@ const Classic = () => {
   const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
   const darkTheme = useContext(ThemeContext).darkTheme;
-  let counter = 0;
+  const renderCountRef = useRef(0);
 
   const getPokemonData = async (url: string) => {
     const rawData = await fetch(url);
@@ -23,8 +23,8 @@ const Classic = () => {
     const evolutionChainUrl = speciesData.evolution_chain.url;
     const evolutionChainRawData = await fetch(evolutionChainUrl);
     const evolutionChainData = await evolutionChainRawData.json();
-    counter === 0 && setAnswerPic(data.sprites.front_default);
-    counter++;
+    renderCountRef.current === 0 && setAnswerPic(data.sprites.front_default);
+    renderCountRef.current = renderCountRef.current + 1;
     let evolutionStage;
     const evolvesFrom = speciesData.evolves_from_species;
     const firstEvolution = evolutionChainData.chain;
