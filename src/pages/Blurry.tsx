@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../App";
 
 const Blurry = () => {
-  const [answer, setAnswer] = useState("");
-  const [answerPic, setAnswerPic] = useState("");
+  const [answer, setAnswer] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -14,7 +13,7 @@ const Blurry = () => {
   const handleGuess = async () => {
     if (!state) {
       try {
-        if (input.toLowerCase() === answer.toLowerCase()) {
+        if (input.toLowerCase() === answer[0].toLowerCase()) {
           setGuesses([input.toLowerCase(), ...guesses]);
           setState(true);
         } else {
@@ -35,7 +34,7 @@ const Blurry = () => {
   };
 
   useEffect(() => {
-    if (answer === "" && !loading && !state) {
+    if (answer[0] === "" && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
@@ -44,8 +43,7 @@ const Blurry = () => {
             `https://pokeapi.co/api/v2/pokemon/${id}`
           );
           const data = await rawData.json();
-          setAnswer(data.name);
-          setAnswerPic(data.sprites.front_default);
+          setAnswer([data.name, data.sprites.front_default]);
           console.log(data.name);
         } catch (error) {
           console.error(error);
@@ -93,7 +91,7 @@ const Blurry = () => {
           </button>
         </div>
         <img
-          src={answerPic}
+          src={answer[1]}
           className="blurry-image"
           style={{
             filter: !state ? `blur(${64 - guesses.length * 8}px)` : "none",

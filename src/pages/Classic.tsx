@@ -12,64 +12,78 @@ const Classic = () => {
   const [answerPic, setAnswerPic] = useState("");
   const [state, setState] = useState(false);
   const darkTheme = useContext(ThemeContext).darkTheme;
+  let counter = 0;
+
+  const getPokemonData = async (url: string) => {
+    const rawData = await fetch(url);
+    const data = await rawData.json();
+    const speciesUrl = data.species.url;
+    const speciesRawData = await fetch(speciesUrl);
+    const speciesData = await speciesRawData.json();
+    const evolutionChainUrl = speciesData.evolution_chain.url;
+    const evolutionChainRawData = await fetch(evolutionChainUrl);
+    const evolutionChainData = await evolutionChainRawData.json();
+    counter === 0 && setAnswerPic(data.sprites.front_default);
+    counter++;
+    let evolutionStage;
+    const evolvesFrom = speciesData.evolves_from_species;
+    const firstEvolution = evolutionChainData.chain;
+
+    if (!evolvesFrom && firstEvolution.evolves_to.length > 0) {
+      evolutionStage = "1";
+    } else if (
+      evolvesFrom &&
+      firstEvolution.evolves_to.length > 0 &&
+      firstEvolution.evolves_to[0].evolves_to.length > 0
+    ) {
+      evolutionStage = "2";
+    } else {
+      evolutionStage = "3";
+    }
+    const pokemonData = {
+      name: data.name,
+      type1: data.types.length > 0 ? data.types[0].type.name : "None",
+      type2: data.types.length > 1 ? data.types[1].type.name : "None",
+      habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
+      color: speciesData.color ? speciesData.color.name : "Unknown",
+      evolutionStage: evolutionStage,
+      height: `${data.height * 10} cm`,
+      weight: `${data.weight / 10} kg`,
+      isCorrect:
+        guesses.length === 0
+          ? [false]
+          : [
+              answer && data.name === answer.name ? true : false,
+              answer && data.types[0].type.name === answer.type1 ? true : false,
+              (answer &&
+                data.types.length > 1 &&
+                data.types[1].type.name === answer.type2) ||
+              (data.types.length === 1 && answer?.type2 === "None")
+                ? true
+                : false,
+              answer && speciesData.habitat.name === answer.habitat
+                ? true
+                : false,
+              answer && speciesData.color.name === answer.color ? true : false,
+              answer && evolutionStage === answer.evolutionStage ? true : false,
+              answer && `${data.height * 10} cm` === answer.height
+                ? true
+                : false,
+              answer && `${data.weight / 10} kg` === answer.weight
+                ? true
+                : false,
+            ],
+    };
+    return pokemonData;
+  };
 
   const handleGuess = async () => {
     if (state === false) {
       try {
-        const rawData = await fetch(
+        const data = await getPokemonData(
           `https://pokeapi.co/api/v2/pokemon/${input.toLowerCase()}`
         );
-        const data = await rawData.json();
-        const speciesUrl = data.species.url;
-        const speciesRawData = await fetch(speciesUrl);
-        const speciesData = await speciesRawData.json();
-        const evolutionChainUrl = speciesData.evolution_chain.url;
-        const evolutionChainRawData = await fetch(evolutionChainUrl);
-        const evolutionChainData = await evolutionChainRawData.json();
-        let evolutionStage;
-        const evolvesFrom = speciesData.evolves_from_species;
-        const firstEvolution = evolutionChainData.chain;
-
-        if (!evolvesFrom && firstEvolution.evolves_to.length > 0) {
-          evolutionStage = "1";
-        } else if (
-          evolvesFrom &&
-          firstEvolution.evolves_to.length > 0 &&
-          firstEvolution.evolves_to[0].evolves_to.length > 0
-        ) {
-          evolutionStage = "2";
-        } else {
-          evolutionStage = "3";
-        }
-        const pokemonData = {
-          name: data.name,
-          type1: data.types.length > 0 ? data.types[0].type.name : "None",
-          type2: data.types.length > 1 ? data.types[1].type.name : "None",
-          habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
-          color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: evolutionStage,
-          height: `${data.height * 10} cm`,
-          weight: `${data.weight / 10} kg`,
-          isCorrect: [
-            answer && data.name === answer.name ? true : false,
-            answer && data.types[0].type.name === answer.type1 ? true : false,
-            (answer &&
-              data.types.length > 1 &&
-              data.types[1].type.name === answer.type2) ||
-            (data.types.length === 1 && answer?.type2 === "None")
-              ? true
-              : false,
-            answer && speciesData.habitat.name === answer.habitat
-              ? true
-              : false,
-            answer && speciesData.color.name === answer.color ? true : false,
-            answer && evolutionStage === answer.evolutionStage ? true : false,
-            answer && `${data.height * 10} cm` === answer.height ? true : false,
-            answer && `${data.weight / 10} kg` === answer.weight ? true : false,
-          ],
-        };
-
-        setGuesses([pokemonData, ...guesses]);
+        setGuesses([data, ...guesses]);
         answer && data.name === answer.name && setState(true);
       } catch (error) {
         console.error(error);
@@ -82,49 +96,18 @@ const Classic = () => {
     const getAnswer = async () => {
       const id = Math.floor(Math.random() * 151);
       try {
-        const rawData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-        const data = await rawData.json();
-        const speciesUrl = data.species.url;
-        const speciesRawData = await fetch(speciesUrl);
-        const speciesData = await speciesRawData.json();
-        setAnswerPic(data.sprites.front_default);
-        const evolutionChainUrl = speciesData.evolution_chain.url;
-        const evolutionChainRawData = await fetch(evolutionChainUrl);
-        const evolutionChainData = await evolutionChainRawData.json();
-        let evolutionStage;
-        const evolvesFrom = speciesData.evolves_from_species;
-        const firstEvolution = evolutionChainData.chain;
-
-        if (!evolvesFrom && firstEvolution.evolves_to.length > 0) {
-          evolutionStage = "1";
-        } else if (
-          evolvesFrom &&
-          firstEvolution.evolves_to.length > 0 &&
-          firstEvolution.evolves_to[0].evolves_to.length > 0
-        ) {
-          evolutionStage = "2";
-        } else {
-          evolutionStage = "3";
-        }
-        const pokemonData = {
-          name: data.name,
-          type1: data.types.length > 0 ? data.types[0].type.name : "None",
-          type2: data.types.length > 1 ? data.types[1].type.name : "None",
-          habitat: speciesData.habitat ? speciesData.habitat.name : "Unknown",
-          color: speciesData.color ? speciesData.color.name : "Unknown",
-          evolutionStage: evolutionStage,
-          height: `${data.height * 10} cm`,
-          weight: `${data.weight / 10} kg`,
-          isCorrect: [false],
-        };
-        setAnswer(pokemonData);
-        console.log(pokemonData.name);
+        const data = await getPokemonData(
+          `https://pokeapi.co/api/v2/pokemon/${id}`
+        );
+        setAnswer(data);
+        console.log(data.name);
       } catch (error) {
         console.error(error);
         alert("Failed to fetch Answer Pokémon, reload page");
       }
     };
     getAnswer();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
