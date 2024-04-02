@@ -36,7 +36,7 @@ const Zoom = () => {
   };
 
   useEffect(() => {
-    if (answer === "" && !loading && !state) {
+    if (!answer[0] && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
@@ -57,7 +57,6 @@ const Zoom = () => {
       };
       getAnswer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -127,6 +126,7 @@ const Zoom = () => {
         )}
         {guesses.map((guess, index) => (
           <div
+            key={index}
             className="zoom-div zoom-guess"
             style={{
               backgroundColor: state && index === 0 ? "green" : "red",

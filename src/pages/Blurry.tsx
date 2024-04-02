@@ -35,7 +35,7 @@ const Blurry = () => {
   };
 
   useEffect(() => {
-    if (answer === "" && !loading && !state) {
+    if (!answer[0] && !loading && !state) {
       const getAnswer = async () => {
         setLoading(true);
         const id = Math.floor(Math.random() * 151);
@@ -56,7 +56,6 @@ const Blurry = () => {
       };
       getAnswer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -114,6 +113,7 @@ const Blurry = () => {
         )}
         {guesses.map((guess, index) => (
           <div
+            key={index}
             className="blurry-div blurry-guess"
             style={{
               backgroundColor: state && index === 0 ? "green" : "red",
