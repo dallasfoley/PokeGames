@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
 import "../App.css";
-import Row from "../components/Row";
-import { PokemonApi } from "../components/Row";
+
+import { useState, useContext } from "react";
 import { ThemeContext } from "../App";
+import { PokemonApi } from "../components/Row";
+import Row from "../components/Row";
 
 const isDev = import.meta.env.MODE === "development";
-
 const API_BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
 
 const ColumnHead = {

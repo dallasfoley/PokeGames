@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../App";
 
 const Zoom = () => {
-  const [answer, setAnswer] = useState<string[]>([]);
+  const [answer, setAnswer] = useState("");
+  const [answerPic, setAnswerPic] = useState("");
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -13,8 +14,12 @@ const Zoom = () => {
   const handleGuess = async () => {
     if (!state) {
       try {
-        setGuesses([input.toLowerCase(), ...guesses]);
-        input.toLowerCase() === answer[0].toLowerCase() && setState(true);
+        if (input.toLowerCase() === answer.toLowerCase()) {
+          setGuesses([input.toLowerCase(), ...guesses]);
+          setState(true);
+        } else {
+          setGuesses([input.toLowerCase(), ...guesses]);
+        }
         setZoomPercent(zoomPercent - 50);
       } catch (error) {
         console.error(error);
@@ -40,7 +45,8 @@ const Zoom = () => {
             `https://pokeapi.co/api/v2/pokemon/${id}`
           );
           const data = await rawData.json();
-          setAnswer([data.name, data.sprites.front_default]);
+          setAnswer(data.name);
+          setAnswerPic(data.sprites.front_default);
           console.log(data.name);
         } catch (error) {
           console.error(error);
@@ -51,7 +57,6 @@ const Zoom = () => {
       };
       getAnswer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -89,7 +94,7 @@ const Zoom = () => {
         </div>
         {state ? (
           <img
-            src={answer[1]}
+            src={answerPic}
             alt="Answer"
             style={{ width: "500px", height: "500px", margin: "20px auto" }}
           />
@@ -97,7 +102,7 @@ const Zoom = () => {
           <div
             className="image-container"
             style={{
-              backgroundImage: `url(${answer[1]})`,
+              backgroundImage: `url(${answerPic})`,
               backgroundSize: `${zoomPercent}%`,
               backgroundPosition: "center",
               width: "500px",
@@ -121,6 +126,7 @@ const Zoom = () => {
         )}
         {guesses.map((guess, index) => (
           <div
+            key={index}
             className="zoom-div zoom-guess"
             style={{
               backgroundColor: state && index === 0 ? "green" : "red",
