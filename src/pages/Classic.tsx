@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { ThemeContext } from "../App";
 import { PokemonApi } from "../components/Row";
 import Row from "../components/Row";
+import InputGuess from "../components/InputGuess";
 
 const isDev = import.meta.env.MODE === "development";
 const API_BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -19,7 +20,10 @@ const ColumnHead = {
   weight: "Weight",
 };
 
-const getPokemonData = async (url: string, answer: PokemonApi | null = null) => {
+const getPokemonData = async (
+  url: string,
+  answer: PokemonApi | null = null
+) => {
   const pokemonResponse = await fetch(url);
   const pokemon = await pokemonResponse.json();
 
@@ -29,13 +33,16 @@ const getPokemonData = async (url: string, answer: PokemonApi | null = null) => 
   const evolutionChainResponse = await fetch(species.evolution_chain.url);
   const evolutionChain = await evolutionChainResponse.json();
 
-  const {name, type1, type2, habitat, color, evolutionStage, height, weight} = answer || {};
+  const { name, type1, type2, habitat, color, evolutionStage, height, weight } =
+    answer || {};
 
   const newEvoState =
     (species.evolves_from_species ? 1 : 0) +
     (evolutionChain.chain.evolves_to.length > 0 ? 1 : 0) +
-    (evolutionChain.chain.evolves_to[0].evolves_to.length > 0 ? 1 : 0)
-      .toString();
+    (evolutionChain.chain.evolves_to[0].evolves_to.length > 0
+      ? 1
+      : 0
+    ).toString();
 
   return {
     name: pokemon.name,
@@ -50,8 +57,8 @@ const getPokemonData = async (url: string, answer: PokemonApi | null = null) => 
     isCorrect: [
       pokemon.name === name,
       pokemon.types[0].type.name === type1,
-      (pokemon.types[1]?.type.name === type2 ||
-              type2 === "None") && species.habitat?.name === habitat,
+      (pokemon.types[1]?.type.name === type2 || type2 === "None") &&
+        species.habitat?.name === habitat,
       species.habitat?.name === habitat,
       species.color?.name === color,
       newEvoState === evolutionStage,
@@ -72,7 +79,7 @@ const Classic = () => {
 
   const handleGuess = async () => {
     try {
-      if(answer === null || hasWon) {
+      if (answer === null || hasWon) {
         setGuesses([]);
         const data = await getPokemonData(
           `${API_BASE_URL}${randomPokemonId}`,
@@ -81,7 +88,7 @@ const Classic = () => {
         isDev && console.log("answer: ", data.name);
         setAnswer(data);
       }
-      if(!hasWon && input !== "") {
+      if (!hasWon && input !== "") {
         const data = await getPokemonData(
           `${API_BASE_URL}${input.toLowerCase()}`,
           answer
@@ -96,38 +103,17 @@ const Classic = () => {
   };
 
   return (
-    <div
-      style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
-    >
+    <div style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}>
       <div className="wrapper">
-        <div className="input-group">
-          <input
-            className="guess-input"
-            disabled={hasWon}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type Pokemon name..."
-            onKeyDown={(e) => e.key === "Enter" && handleGuess()}
-            style={{
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-              color: darkTheme ? "#2f3133" : "#f0f0f0",
-            }}
-          />
-          <button
-            className="guess-button"
-            onClick={handleGuess}
-            style={{
-              color: darkTheme ? "#2f3133" : "#ebfffc",
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-            }}
-          >
-            {hasWon ? "Reset" : "Guess"}
-          </button>
-        </div>
+        <InputGuess
+          input={input}
+          setInput={setInput}
+          handleGuess={handleGuess}
+        />
         {hasWon && (
           <div className="win">
-            Congratulations! It took you {guesses.length} guess{guesses.length !== 1 && "es"} to correctly guess
-            the Pokemon!
+            Congratulations! It took you {guesses.length} guess
+            {guesses.length !== 1 && "es"} to correctly guess the Pokemon!
             <img className="classic-img" src={answer?.picUrl} />
           </div>
         )}
@@ -136,7 +122,7 @@ const Classic = () => {
             <div key={key}>{val}</div>
           ))}
         </div>
-        {guesses.length === 0 &&
+        {guesses.length === 0 && (
           <p
             style={{
               fontSize: "20px",
@@ -145,7 +131,7 @@ const Classic = () => {
           >
             Guess a Pokemon to begin
           </p>
-        }
+        )}
         {guesses.map((guess, idx) => (
           <Row key={`${idx}-${guess.name}`} {...guess} />
         ))}

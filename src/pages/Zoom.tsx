@@ -1,20 +1,33 @@
 import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../App";
+import InputGuess from "../components/InputGuess";
+
+const id = Math.floor(Math.random() * 151);
+
+const getAnswer = async (): Promise<string[]> => {
+  try {
+    const rawData = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await rawData.json();
+    return [data.name, data.sprites.front_default];
+  } catch (error) {
+    console.error(error);
+    alert("Failed to fetch Answer Pokémon, reload page");
+    return ["", ""];
+  }
+};
 
 const Zoom = () => {
-  const [answer, setAnswer] = useState("");
-  const [answerPic, setAnswerPic] = useState("");
+  const [answer, setAnswer] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
   const [zoomPercent, setZoomPercent] = useState(750);
   const darkTheme = useContext(ThemeContext).darkTheme;
 
   const handleGuess = async () => {
     if (!state) {
       try {
-        if (input.toLowerCase() === answer.toLowerCase()) {
+        if (input.toLowerCase() === answer[0].toLowerCase()) {
           setGuesses([input.toLowerCase(), ...guesses]);
           setState(true);
         } else {
@@ -36,32 +49,12 @@ const Zoom = () => {
   };
 
   useEffect(() => {
-    if (!answer[0] && !loading && !state) {
-      const getAnswer = async () => {
-        setLoading(true);
-        const id = Math.floor(Math.random() * 151);
-        try {
-          const rawData = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${id}`
-          );
-          const data = await rawData.json();
-          setAnswer(data.name);
-          setAnswerPic(data.sprites.front_default);
-          console.log(data.name);
-        } catch (error) {
-          console.error(error);
-          alert("Failed to fetch Answer Pokémon, reload page");
-        } finally {
-          setLoading(false);
-        }
-      };
-      getAnswer();
-    }
+    const fetchAnswer = async () => {
+      const data = await getAnswer();
+      setAnswer(data);
+    };
+    fetchAnswer().catch(console.error);
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
@@ -69,32 +62,14 @@ const Zoom = () => {
         className="Zoom"
         style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
       >
-        <div className="input-group">
-          <input
-            className="guess-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type Pokemon name..."
-            onKeyDown={(e) => e.key === "Enter" && handleGuess()}
-            style={{
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-              color: darkTheme ? "#2f3133" : "#f0f0f0",
-            }}
-          ></input>
-          <button
-            className="guess-button"
-            onClick={() => handleGuess()}
-            style={{
-              color: darkTheme ? "#2f3133" : "#ebfffc",
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-            }}
-          >
-            Guess
-          </button>
-        </div>
+        <InputGuess
+          input={input}
+          setInput={setInput}
+          handleGuess={handleGuess}
+        />
         {state ? (
           <img
-            src={answerPic}
+            src={answer[1]}
             alt="Answer"
             style={{ width: "500px", height: "500px", margin: "20px auto" }}
           />
@@ -102,7 +77,7 @@ const Zoom = () => {
           <div
             className="image-container"
             style={{
-              backgroundImage: `url(${answerPic})`,
+              backgroundImage: `url(${answer[1]})`,
               backgroundSize: `${zoomPercent}%`,
               backgroundPosition: "center",
               width: "500px",
