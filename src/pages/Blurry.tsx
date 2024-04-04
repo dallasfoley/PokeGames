@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
+import InputGuess from "../components/InputGuess";
 
 const Blurry = () => {
   const [answer, setAnswer] = useState("");
@@ -68,29 +69,11 @@ const Blurry = () => {
         className="Blurry"
         style={{ backgroundColor: darkTheme ? "#2f3133" : "#f0f0f0" }}
       >
-        <div className="input-group">
-          <input
-            className="guess-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type Pokemon name..."
-            onKeyDown={(e) => e.key === "Enter" && handleGuess()}
-            style={{
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-              color: darkTheme ? "#2f3133" : "#f0f0f0",
-            }}
-          ></input>
-          <button
-            className="guess-button"
-            onClick={() => handleGuess()}
-            style={{
-              color: darkTheme ? "#2f3133" : "#ebfffc",
-              background: darkTheme ? "#ebfffc" : "#2f3133",
-            }}
-          >
-            Guess
-          </button>
-        </div>
+        <InputGuess
+          input={input}
+          setInput={setInput}
+          handleGuess={handleGuess}
+        />
         <img
           src={answerPic}
           className="blurry-image"
