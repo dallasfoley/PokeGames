@@ -20,24 +20,17 @@ const getAnswer = async (): Promise<string[]> => {
 const Blurry = () => {
   const [answer, setAnswer] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
   const darkTheme = useContext(ThemeContext).darkTheme;
 
-  const handleGuess = async () => {
-    if (!state) {
-      try {
-        if (input.toLowerCase() === answer[0].toLowerCase()) {
-          setGuesses([input.toLowerCase(), ...guesses]);
-          setState(true);
-        } else {
-          setGuesses([input.toLowerCase(), ...guesses]);
-        }
-      } catch (error) {
-        console.error(error);
-        alert("Failed to fetch Pokémon");
-      }
-    }
+  const hasWon = guesses.length > 0 && guesses[0] === answer[0];
+
+  const handleGuess = () => {
+    !hasWon && setGuesses([input.toLowerCase(), ...guesses]);
+  };
+
+  const handleGuess2 = (name: string) => {
+    !hasWon && setGuesses([name.toLowerCase(), ...guesses]);
   };
 
   const capitalizeFirstLetter = (info: string | number) => {
@@ -64,21 +57,22 @@ const Blurry = () => {
         <InputGuess
           input={input}
           setInput={setInput}
-          handleGuess={handleGuess}
+          handleGuess={() => handleGuess()}
+          handleGuess2={(name) => handleGuess2(name)}
         />
 
         <img
           src={answer[1]}
           className="blurry-image"
           style={{
-            filter: !state ? `blur(${64 - guesses.length * 8}px)` : "none",
+            filter: !hasWon ? `blur(${64 - guesses.length * 8}px)` : "none",
             width: "500px",
             height: "500px",
             objectFit: "contain",
             transition: "transform 0.3s ease",
           }}
         />
-        {state && (
+        {hasWon && (
           <div className="win">
             <div style={{ color: darkTheme ? "#ebfffc" : "#2f3133" }}>
               Congratulations! It took you {guesses.length}{" "}
@@ -92,7 +86,7 @@ const Blurry = () => {
             key={index}
             className="blurry-div blurry-guess"
             style={{
-              backgroundColor: state && index === 0 ? "green" : "red",
+              backgroundColor: hasWon && index === 0 ? "green" : "red",
               border: darkTheme ? "2px #fff solid" : "2px #2f3133 solid",
               color: darkTheme ? "#ebfffc" : "#2f3133",
             }}

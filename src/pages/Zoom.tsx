@@ -19,26 +19,22 @@ const getAnswer = async (): Promise<string[]> => {
 const Zoom = () => {
   const [answer, setAnswer] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [state, setState] = useState(false);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [zoomPercent, setZoomPercent] = useState(750);
   const darkTheme = useContext(ThemeContext).darkTheme;
 
+  const hasWon = guesses.length > 0 && guesses[0] === answer[0];
+
   const handleGuess = async () => {
-    if (!state) {
-      try {
-        if (input.toLowerCase() === answer[0].toLowerCase()) {
-          setGuesses([input.toLowerCase(), ...guesses]);
-          setState(true);
-        } else {
-          setGuesses([input.toLowerCase(), ...guesses]);
-        }
-        setZoomPercent(zoomPercent - 50);
-      } catch (error) {
-        console.error(error);
-        alert("Failed to fetch Pokémon");
-      }
+    if (!hasWon) {
+      setGuesses([input.toLowerCase(), ...guesses]);
+      setZoomPercent(zoomPercent - 50);
     }
+  };
+
+  const handleGuess2 = (name: string) => {
+    !hasWon && setGuesses([name.toLowerCase(), ...guesses]);
+    setZoomPercent(zoomPercent - 50);
   };
 
   const capitalizeFirstLetter = (info: string | number) => {
@@ -66,8 +62,9 @@ const Zoom = () => {
           input={input}
           setInput={setInput}
           handleGuess={handleGuess}
+          handleGuess2={(name) => handleGuess2(name)}
         />
-        {state ? (
+        {hasWon ? (
           <img
             src={answer[1]}
             alt="Answer"
@@ -89,7 +86,7 @@ const Zoom = () => {
           ></div>
         )}
 
-        {state && (
+        {hasWon && (
           <div
             className="win"
             style={{ color: darkTheme ? "#ebfffc" : "#2f3133" }}
@@ -104,7 +101,7 @@ const Zoom = () => {
             key={index}
             className="zoom-div zoom-guess"
             style={{
-              backgroundColor: state && index === 0 ? "green" : "red",
+              backgroundColor: hasWon && index === 0 ? "green" : "red",
               border: darkTheme ? "2px #fff solid" : "2px #2f3133 solid",
               color: darkTheme ? "#ebfffc" : "#2f3133",
             }}

@@ -6,10 +6,12 @@ const InputGuess = ({
   input,
   setInput,
   handleGuess,
+  handleGuess2,
 }: {
   input: string;
   setInput: (value: string) => void;
   handleGuess: () => void;
+  handleGuess2: (name: string) => void;
 }) => {
   const { darkTheme } = useContext(ThemeContext);
   const [filteredData, setFilteredData] = useState<string[]>([]);
@@ -63,7 +65,7 @@ const InputGuess = ({
               className="dataItem"
               onClick={() => {
                 setInput(name);
-                handleGuess();
+                handleGuess2(name);
               }}
               key={key}
               style={{

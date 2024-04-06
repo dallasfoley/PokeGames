@@ -78,6 +78,8 @@ const Classic = () => {
   const hasWon = guesses.length > 0 && guesses[0].name === answer?.name;
 
   const handleGuess = async () => {
+    console.log("answer: ", answer);
+    console.log("input: ", input);
     try {
       if (answer === null || hasWon) {
         setGuesses([]);
@@ -88,9 +90,36 @@ const Classic = () => {
         isDev && console.log("answer: ", data.name);
         setAnswer(data);
       }
-      if (!hasWon && input !== "") {
+      if (!hasWon) {
         const data = await getPokemonData(
           `${API_BASE_URL}${input.toLowerCase()}`,
+          answer
+        );
+        setGuesses([data, ...guesses]);
+      }
+    } catch (error) {
+      alert("Failed to fetch Pokémon");
+    } finally {
+      setInput("");
+    }
+  };
+
+  const handleGuess2 = async (name: string) => {
+    console.log("answer: ", answer);
+    console.log("input: ", name);
+    try {
+      if (answer === null || hasWon) {
+        setGuesses([]);
+        const data = await getPokemonData(
+          `${API_BASE_URL}${randomPokemonId}`,
+          answer
+        );
+        isDev && console.log("answer: ", data.name);
+        setAnswer(data);
+      }
+      if (!hasWon) {
+        const data = await getPokemonData(
+          `${API_BASE_URL}${name.toLowerCase()}`,
           answer
         );
         setGuesses([data, ...guesses]);
@@ -109,6 +138,7 @@ const Classic = () => {
           input={input}
           setInput={setInput}
           handleGuess={handleGuess}
+          handleGuess2={(name) => handleGuess2(name)}
         />
         {hasWon && (
           <div className="win">
